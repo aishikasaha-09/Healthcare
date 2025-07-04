@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { Star } from 'lucide-react';
 import MindfulnessBingo from './mindfulness-bingo';
 import MonthlyChallenge from './monthly-challenge';
@@ -8,6 +9,7 @@ import TrialBanner from '../components/TrialBanner';
 import { getTrialStatus, initializeTrial, TrialData, updateChallengeProgress } from '../utils/trialManager';
 
 const WellnessPlan = () => {
+  const { isAuthenticated } = useAuth();
   const [isPremium, setIsPremium] = useState<boolean>(() => {
     const saved = localStorage.getItem('isPremium');
     return saved === 'true';
@@ -33,17 +35,34 @@ const WellnessPlan = () => {
   const hasAccess = isPremium || trialData.isActive;
 
   useEffect(() => {
-    const trial = getTrialStatus();
-    setTrialData(trial);
-    
-    // Check monthly challenge progress and update trial status
-    const savedProgress = localStorage.getItem('monthly_challenge_progress');
-    if (savedProgress) {
-      const progress = JSON.parse(savedProgress);
-      const completedDays = progress.completed ? progress.completed.filter((day: boolean) => day).length : 0;
-      const updatedTrial = updateChallengeProgress(completedDays);
-      setTrialData(updatedTrial);
-    }
+    const checkTrial = () => {
+      const trial = getTrialStatus();
+      setTrialData(trial);
+
+      // Check monthly challenge progress and update trial status
+      const savedProgress = localStorage.getItem('monthly_challenge_progress');
+      if (savedProgress) {
+        const progress = JSON.parse(savedProgress);
+        const completedDays = progress.completed ? progress.completed.filter((day: boolean) => day).length : 0;
+        const updatedTrial = updateChallengeProgress(completedDays);
+        setTrialData(updatedTrial);
+        // If trial just expired, show alert automatically
+        if (!isPremium && updatedTrial.hasExpired) {
+          setShowTrialAlert(true);
+        }
+      } else {
+        // If trial just expired, show alert automatically
+        if (!isPremium && trial.hasExpired) {
+          setShowTrialAlert(true);
+        }
+      }
+    };
+
+    checkTrial();
+
+    // Also set up an interval to check for trial expiration every 2 seconds
+    const interval = setInterval(checkTrial, 2000);
+    return () => clearInterval(interval);
   }, [isPremium, showTrialAlert]);
 
   const handleStartTrial = () => {
@@ -75,10 +94,26 @@ const WellnessPlan = () => {
     setShowTrialAlert(true);
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="max-w-2xl mx-auto py-20 px-4 text-center">
+        <h1 className="text-3xl font-bold mb-6 text-purple-700">Personalized Wellness Plan</h1>
+        <div className="bg-red-50 border border-red-200 rounded-lg p-8 mb-6">
+          <h2 className="text-xl font-semibold text-red-700 mb-2">Login Required</h2>
+          <p className="text-gray-700 mb-4">You must be logged in to access the wellness plan and interactive activities.</p>
+          <div className="flex justify-center space-x-4">
+            <a href="/login" className="px-6 py-2 bg-purple-600 text-white rounded-lg font-bold shadow hover:bg-purple-700 transition">Login</a>
+            <a href="/register" className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-bold shadow hover:bg-indigo-700 transition">Sign Up</a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-3xl mx-auto py-16 px-4">
       <h1 className="text-3xl font-bold mb-6 text-purple-700">Personalized Wellness Plan</h1>
-      
+      {/* ...existing code... */}
       {/* Trial Banner - Only show if not premium */}
       {!isPremium && (
         <TrialBanner trialData={trialData} onStartTrial={handleStartTrial} />
@@ -101,7 +136,7 @@ const WellnessPlan = () => {
       {hasAccess ? (
         <>
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-2 text-purple-600">Step 1: Play Mindfulness Bingo</h2>
+            <h2 className="text-xl font-semibold mb-2 text-green-600">Step 1: Mindfulness Bingo</h2>
             <MindfulnessBingo
               externalPoints={bingoPoints}
               setExternalPoints={setBingoPoints}

@@ -53,14 +53,14 @@ export const getTrialStatus = (): TrialData => {
 
 export const updateChallengeProgress = (completedDays: number): TrialData => {
   const trialData = getTrialStatus();
+  // Lock after 4 completions (trial expires after 4th day)
   const updatedTrial: TrialData = {
     ...trialData,
     challengeDaysUsed: completedDays,
     daysRemaining: Math.max(0, TRIAL_DURATION_DAYS - completedDays),
-    hasExpired: completedDays >= TRIAL_DURATION_DAYS,
-    isActive: completedDays < TRIAL_DURATION_DAYS
+    hasExpired: completedDays >= 4,
+    isActive: completedDays < 4
   };
-  
   localStorage.setItem(TRIAL_KEY, JSON.stringify(updatedTrial));
   return updatedTrial;
 };

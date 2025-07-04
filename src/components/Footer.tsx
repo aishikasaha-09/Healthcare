@@ -3,28 +3,28 @@ import { Youtube, Linkedin, Twitter, Instagram, Heart } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-16">
+    <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Logo and Description */}
           <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">B</span>
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-xl">B</span>
               </div>
-              <span className="text-xl font-bold">BriefPsych</span>
+              <span className="text-2xl font-display font-bold">BriefPsych</span>
             </div>
-            <p className="text-gray-400 mb-6">
-              Psychology made simple
+            <p className="text-gray-400 mb-6 leading-relaxed">
+              Making psychology accessible to everyone through evidence-based insights and practical applications.
             </p>
-            <a href="/therapy-finder" className="text-purple-400 hover:text-purple-300 transition-colors">
-              Find a Therapist
-            </a>
-            <br />
-            <br />
-            <a href="/mental-health-resources" className="text-purple-400 hover:text-purple-300 transition-colors">
-              Mental Health Resources
-            </a>
+            <div className="space-y-3">
+              <a href="/therapy-finder" className="block text-purple-400 hover:text-purple-300 transition-colors duration-300">
+                Find a Therapist
+              </a>
+              <a href="/mental-health-resources" className="block text-purple-400 hover:text-purple-300 transition-colors duration-300">
+                Mental Health Resources
+              </a>
+            </div>
           </div>
 
           {/* Contact */}
@@ -85,32 +85,33 @@ const Footer = () => {
         </div>
 
         {/* Social Media and Copyright */}
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div className="border-t border-gray-700 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
             <div className="flex items-center space-x-6">
-              <a href="#" className="text-red-500 hover:text-red-400 transition-colors">
-                <Youtube className="w-6 h-6" />
+              <a href="#" className="text-red-500 hover:text-red-400 transition-all duration-300 transform hover:scale-110">
+                <Youtube className="w-7 h-7" />
               </a>
-              <a href="#" className="text-blue-600 hover:text-blue-500 transition-colors">
-                <Linkedin className="w-6 h-6" />
+              <a href="#" className="text-blue-600 hover:text-blue-500 transition-all duration-300 transform hover:scale-110">
+                <Linkedin className="w-7 h-7" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Twitter className="w-6 h-6" />
+              <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110">
+                <Twitter className="w-7 h-7" />
               </a>
-              <a href="#" className="text-pink-500 hover:text-pink-400 transition-colors">
-                <Instagram className="w-6 h-6" />
+              <a href="#" className="text-pink-500 hover:text-pink-400 transition-all duration-300 transform hover:scale-110">
+                <Instagram className="w-7 h-7" />
               </a>
             </div>
             
             <div className="flex items-center space-x-2 text-gray-400">
               <span>Made with</span>
-              <Heart className="w-4 h-4 text-red-500" />
+              <Heart className="w-5 h-5 text-red-500 animate-pulse" />
               <span>for mental wellness</span>
             </div>
           </div>
           
           <div className="text-center mt-8 text-gray-500">
-            <p>BriefPsych © 2024. All Rights Reserved.</p>
+            <p className="text-lg">BriefPsych © 2024. All Rights Reserved.</p>
+            <p className="text-sm mt-2">Empowering minds, one insight at a time</p>
           </div>
         </div>
       </div>
