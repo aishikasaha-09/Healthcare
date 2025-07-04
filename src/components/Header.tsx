@@ -68,6 +68,10 @@ const Header = () => {
               Infographics
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
             </Link>
+            <Link to="/therapist-chatbot" className="relative text-gray-700 hover:text-purple-600 font-medium transition-colors duration-300 py-2 px-1 group">
+              AI Therapist
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+            </Link>
           </nav>
 
           {/* User Menu and Mobile Menu */}

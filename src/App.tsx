@@ -1,3 +1,6 @@
+import TherapistChatbot from './pages/TherapistChatbot';
+import withPremiumAccess from './components/withPremiumAccess';
+const PremiumTherapistChatbot = withPremiumAccess(TherapistChatbot);
 import MindfulnessBingo from './pages/mindfulness-bingo';
 import MonthlyChallenge from './pages/monthly-challenge';
 import Research1 from './pages/research-1';
@@ -87,6 +90,7 @@ function App() {
           <Route path="/pages/top-article-1" element={<TopArticle1 />} />
           <Route path="/pages/top-article-2" element={<TopArticle2 />} />
           <Route path="/pages/top-article-3" element={<TopArticle3 />} />
+          <Route path="/therapist-chatbot" element={<PremiumTherapistChatbot />} />
         </Routes>
         <Footer />
         <FloatingActionButton />
