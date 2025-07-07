@@ -53,31 +53,31 @@ const MonthlyChallenge: React.FC<MonthlyChallengeProps> = ({
 
   const handleClick = (idx: number) => {
     if (!completed[idx]) {
-      // Check if user is trying to access day 4 or beyond without premium access
+      // Check if user is trying to access day 5 or beyond without premium access
       const completedDays = completed.filter(day => day).length;
-      
-      if (completedDays >= 3 && !hasAccess && onTrialExhausted) {
+
+      if (completedDays >= 4 && !hasAccess && onTrialExhausted) {
         onTrialExhausted();
         return;
       }
-      
+
       const newCompleted = [...completed];
       newCompleted[idx] = true;
       setCompleted(newCompleted);
       const newPoints = points + 20;
       setPoints(newPoints);
       if (setExternalPoints) setExternalPoints(newPoints);
-      
+
       // Save progress to localStorage
       const progress = {
         completed: newCompleted,
         points: newPoints
       };
       localStorage.setItem('monthly_challenge_progress', JSON.stringify(progress));
-      
-      // Check if user just completed their 3rd day
+
+      // Check if user just completed their 4th day
       const newCompletedCount = newCompleted.filter(day => day).length;
-      if (newCompletedCount === 3 && !hasAccess && onTrialExhausted) {
+      if (newCompletedCount === 4 && !hasAccess && onTrialExhausted) {
         // Show a message that trial is about to end
         setTimeout(() => {
           onTrialExhausted();
@@ -93,8 +93,9 @@ const MonthlyChallenge: React.FC<MonthlyChallengeProps> = ({
       <div className="grid grid-cols-6 gap-3 bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 p-6 rounded-3xl shadow-2xl">
         {Array.from({ length: daysInMonth }).map((_, idx) => {
           const completedDays = completed.filter(day => day).length;
-          const isLocked = !hasAccess && completedDays >= 3 && !completed[idx];
-          
+          // Lock after 4 completions (i.e., on 5th and beyond)
+          const isLocked = !hasAccess && completedDays >= 4 && !completed[idx];
+
           return (
             <button
               key={idx}
